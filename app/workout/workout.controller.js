@@ -1,7 +1,6 @@
 import asyncHandler from 'express-async-handler';
 
 import { prisma } from '../prisma.js';
-import { userFields } from '../utils/user.utils.js';
 
 // @desc get Workouts
 // @route GET /api/workouts
@@ -33,6 +32,11 @@ export const getWorkout = asyncHandler(async (req, res) => {
 			exercises: true
 		}
 	});
+
+	if (!workout) {
+		res.status(404);
+		throw new Error('Workout not found!');
+	}
 
 	const minutes = Math.ceil(workout.exercises.length * 3.7);
 
@@ -73,10 +77,11 @@ export const editWorkout = asyncHandler(async (req, res) => {
 			data: {
 				name,
 				exercises: {
-					connect: exerciseIds
+					set: exerciseIds.map((id) => ({ id: Number(id) }))
 				}
 			}
 		});
+
 		res.json(workout);
 	} catch (error) {
 		res.status(404);

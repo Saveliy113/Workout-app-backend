@@ -22,10 +22,9 @@ async function main() {
 	}
 
 	const PORT = 5000;
+	const __dirname = path.resolve();
 
 	app.use(express.json());
-
-	const __dirname = path.resolve();
 
 	app.use('/api/auth', authRoutes);
 	app.use('/api/users', userRoutes);
