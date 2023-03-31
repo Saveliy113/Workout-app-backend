@@ -1,4 +1,5 @@
 import 'colors';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import morgan from 'morgan';
@@ -25,6 +26,7 @@ async function main() {
 	const __dirname = path.resolve();
 
 	app.use(express.json());
+	app.use(cors());
 
 	app.use('/api/auth', authRoutes);
 	app.use('/api/users', userRoutes);

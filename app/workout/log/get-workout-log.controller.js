@@ -35,7 +35,7 @@ export const getWorkoutLog = asyncHandler(async (req, res) => {
 	}
 
 	res.json({
-		...workout,
+		...workoutLog,
 		minutes: calculateMinutes(workoutLog.workout.exercises.length)
 	});
 });
